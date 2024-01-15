@@ -8,6 +8,7 @@ class PlantDetectionBackendApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("Context loaded");
     }
 
 }
