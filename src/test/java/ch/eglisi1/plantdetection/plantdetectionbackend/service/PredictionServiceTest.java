@@ -8,14 +8,14 @@ import org.springframework.web.client.ResourceAccessException;
 
 @SpringBootTest
 //@TestPropertySource("classpath:application.properties")
-class DetectionServiceTest {
+class PredictionServiceTest {
     @Autowired
-    DetectionService detectionService;
+    PredictionService predictionService;
 
     @Test
     void predict_serviceOffline() {
         // act
-        Exception exception = Assertions.assertThrows(ResourceAccessException.class, () -> detectionService.predict("foo"));
+        Exception exception = Assertions.assertThrows(ResourceAccessException.class, () -> predictionService.predict("foo"));
 
         // assert
         Assertions.assertFalse(exception.getMessage().isEmpty());

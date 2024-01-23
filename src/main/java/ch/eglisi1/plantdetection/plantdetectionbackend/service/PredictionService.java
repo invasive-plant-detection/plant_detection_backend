@@ -11,11 +11,11 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class DetectionService {
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(DetectionService.class);
+public class PredictionService {
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(PredictionService.class);
     private final String modelUrl;
 
-    public DetectionService(@Value("${plant-detection.model.url}") String modelUrl) {
+    public PredictionService(@Value("${plant-detection.model.url}") String modelUrl) {
         this.modelUrl = modelUrl;
     }
 

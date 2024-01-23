@@ -1,7 +1,7 @@
 package ch.eglisi1.plantdetection.plantdetectionbackend.controller;
 
 import ch.eglisi1.plantdetection.plantdetectionbackend.schema.PredictionResponseModel;
-import ch.eglisi1.plantdetection.plantdetectionbackend.service.DetectionService;
+import ch.eglisi1.plantdetection.plantdetectionbackend.service.PredictionService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,19 +18,19 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ExtendWith(MockitoExtension.class)
-class DetectionControllerTest {
+class PredictionControllerTest {
 
     private MockMvc mockMvc;
 
     @Mock
-    private DetectionService detectionService;
+    private PredictionService predictionService;
 
     @InjectMocks
-    private DetectionController detectionController;
+    private PredictionController predictionController;
 
     @BeforeEach
     public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(detectionController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(predictionController).build();
     }
 
     @Test
@@ -40,7 +40,7 @@ class DetectionControllerTest {
 
         PredictionResponseModel mockResponse = new PredictionResponseModel(testImage, mockInstruction);
 
-        BDDMockito.given(detectionService.predict(ArgumentMatchers.eq(testImage)))
+        BDDMockito.given(predictionService.predict(ArgumentMatchers.eq(testImage)))
                 .willReturn(mockResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/predict")
