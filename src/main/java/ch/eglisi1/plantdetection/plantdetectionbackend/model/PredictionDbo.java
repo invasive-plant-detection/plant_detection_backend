@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity(name = "PREDICTION")
 public class PredictionDbo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long predictionId;
+    private UUID predictionId;
 
     @Column(precision = 10, scale = 8)
     private BigDecimal latitude;
@@ -29,7 +30,7 @@ public class PredictionDbo {
     public PredictionDbo() {
     }
 
-    public PredictionDbo(Long predictionId, BigDecimal latitude, BigDecimal longitude, LocalDateTime createdAt, String image) {
+    public PredictionDbo(UUID predictionId, BigDecimal latitude, BigDecimal longitude, LocalDateTime createdAt, String image) {
         this.predictionId = predictionId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -37,16 +38,16 @@ public class PredictionDbo {
         this.image = image;
     }
 
-    public PredictionDbo(Long predictionId, BigDecimal latitude, BigDecimal longitude, LocalDateTime createdAt, String image, String prediction) {
+    public PredictionDbo(UUID predictionId, BigDecimal latitude, BigDecimal longitude, LocalDateTime createdAt, String image, String prediction) {
         this(predictionId, latitude, longitude, createdAt, image);
         this.prediction = prediction;
     }
 
-    public Long getPredictionId() {
+    public UUID getPredictionId() {
         return predictionId;
     }
 
-    public void setPredictionId(Long predictionId) {
+    public void setPredictionId(UUID predictionId) {
         this.predictionId = predictionId;
     }
 
