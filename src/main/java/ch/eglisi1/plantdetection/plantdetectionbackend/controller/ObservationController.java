@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class ObservationController {
@@ -37,10 +38,7 @@ public class ObservationController {
         }
     }
 
-    public ResponseEntity<PredictionDbo> findPredictionById(@PathVariable Long id) {
-        if (id <= 0) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<PredictionDbo> findPredictionById(@PathVariable UUID id) {
         Optional<PredictionDbo> prediction = predictionRepository.findById(id);
         return prediction
                 .map(ResponseEntity::ok)

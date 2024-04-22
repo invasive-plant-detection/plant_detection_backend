@@ -9,7 +9,7 @@ import java.util.UUID;
 @Entity(name = "PREDICTION")
 public class PredictionDbo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID predictionId;
 
     @Column(precision = 10, scale = 8)
