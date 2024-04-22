@@ -36,7 +36,7 @@ public class DataInitializer {
 
             PredictionDbo predictionDbo = new PredictionDbo(null, latitude, longitude, randomDateTimeWithinLast100Days(), base64Image, prediction);
             PredictionDbo savedDbo = predictionRepository.save(predictionDbo);
-            logger.debug("Created Entity:\n" + savedDbo);
+            logger.debug("Created Entity:\n{}", savedDbo);
         }
         logger.info("Created {} entities", entitiesToCreate);
     }
