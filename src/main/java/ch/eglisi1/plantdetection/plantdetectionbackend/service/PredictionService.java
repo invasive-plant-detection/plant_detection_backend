@@ -26,10 +26,10 @@ public class PredictionService {
 
         try {
             ResponseEntity<PredictionResponseModel> response = restTemplate.postForEntity(uri, new PredictionRequestModel(image), PredictionResponseModel.class);
-            logger.info("Response: " + response.getBody());
+            logger.info("Response: {}", response.getBody());
             return response.getBody();
         } catch (ResourceAccessException | RestClientResponseException e) {
-            logger.error("Error during post call to " + uri, e);
+            logger.error("Error during post call to {}", uri, e);
             throw e;
         }
     }
