@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DataInitializer {
     private final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
     private final Random random = new Random();
-    private PredictionRepository predictionRepository;
+    private final PredictionRepository predictionRepository;
 
     @Autowired
     public DataInitializer(PredictionRepository predictionRepository) {
