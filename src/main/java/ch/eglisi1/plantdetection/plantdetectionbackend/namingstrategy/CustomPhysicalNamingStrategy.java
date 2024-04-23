@@ -8,38 +8,43 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalCatalogName(Identifier name, JdbcEnvironment context) {
-        return convert(name);
+        return name;
     }
 
     @Override
     public Identifier toPhysicalSchemaName(Identifier name, JdbcEnvironment context) {
-        return convert(name);
+        return name;
     }
 
     @Override
     public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) {
-        return convert(name);
+        return convertWithPrefix(name, "T_");
     }
 
     @Override
     public Identifier toPhysicalSequenceName(Identifier name, JdbcEnvironment context) {
-        return convert(name);
+        return convertWithPrefix(name, "SEQ_");
     }
 
     @Override
     public Identifier toPhysicalColumnName(Identifier name, JdbcEnvironment context) {
-        return convert(name);
+        return convertToUpperCase(name); // Just convert column names to upper case
     }
 
-    private Identifier convert(Identifier identifier) {
+    private Identifier convertWithPrefix(Identifier identifier, String prefix) {
         if (identifier == null) {
             return null;
         }
-
-        String regex = "(?i)dbo$"; // Case-insensitive match for 'dbo' at the end of the string
-        String newName = identifier.getText().replaceAll(regex, "").toUpperCase();
-        newName = "T_" + newName; // Prefix with 'T_'
+        String newName = identifier.getText().toUpperCase();
+        newName = prefix + newName;
         return Identifier.toIdentifier(newName);
+    }
+
+    private Identifier convertToUpperCase(Identifier identifier) {
+        if (identifier == null) {
+            return null;
+        }
+        return Identifier.toIdentifier(identifier.getText().toUpperCase());
     }
 }
 
