@@ -43,6 +43,12 @@
             <artifactId>spring-boot-starter-data-rest</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.h2database</groupId>
