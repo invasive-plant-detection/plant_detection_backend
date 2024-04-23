@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -33,7 +34,7 @@ public class DataInitializer {
     public void initData() {
         if ("DEV".equals(environmentName)) {
             int entitiesToCreate = 100;
-            String base64Image = "placeholder_for_base64_image";
+            String base64Image = getBase64Image();
             String prediction = "Here will be my prediction that is better than a coin flip";
             for (int i = 0; i < entitiesToCreate; i++) {
                 BigDecimal latitude = BigDecimal.valueOf(generateRandomCoordinate(46.8, 47.8)); // Approximate range for latitude in German-speaking Switzerland
@@ -44,6 +45,14 @@ public class DataInitializer {
                 logger.debug("Created Entity:\n{}", savedDbo);
             }
             logger.info("Created {} entities", entitiesToCreate);
+        }
+    }
+
+    private String getBase64Image() {
+        try {
+            return ImageGenerator.generateRandomBase64Image(15, 15);
+        } catch (IOException e) {
+            return  "Placeholder";
         }
     }
 

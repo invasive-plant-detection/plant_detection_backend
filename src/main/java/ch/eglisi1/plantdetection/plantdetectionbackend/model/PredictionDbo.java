@@ -18,7 +18,8 @@ public class PredictionDbo {
     @Column(precision = 10, scale = 8)
     private BigDecimal longitude;
 
-    @Column
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String image;
 
     @Column
