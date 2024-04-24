@@ -2,7 +2,6 @@ package ch.eglisi1.plantdetection.plantdetectionbackend.service;
 
 import ch.eglisi1.plantdetection.plantdetectionbackend.model.PredictionDbo;
 import ch.eglisi1.plantdetection.plantdetectionbackend.repository.PredictionRepository;
-import ch.eglisi1.plantdetection.plantdetectionbackend.schema.IncomingPredictionRequestModel;
 import ch.eglisi1.plantdetection.plantdetectionbackend.schema.OutgoingPredictionRequestModel;
 import ch.eglisi1.plantdetection.plantdetectionbackend.schema.PredictionResponseModel;
 import org.slf4j.Logger;
