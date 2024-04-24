@@ -1,5 +1,5 @@
 # plant_detection_backend 🌱
-This is a backend service that detects plants from an image.
+This is a backend service that detects invasive plants from an image.
 
 ## Requirements 📝
 
