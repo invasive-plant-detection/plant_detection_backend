@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Data object for the prediction table.
+ */
 @Entity(name = "PREDICTION")
 public class PredictionDbo {
     @Id

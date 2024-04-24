@@ -12,17 +12,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller for getting observations from the database
+ */
 @RestController
 public class ObservationController {
     private final Logger logger = LoggerFactory.getLogger(ObservationController.class);
 
     private final PredictionRepository predictionRepository;
 
+    /**
+     * Constructor for the ObservationController
+     * @param predictionRepository the repository to get the observations from
+     */
     @Autowired
     public ObservationController(PredictionRepository predictionRepository) {
         this.predictionRepository = predictionRepository;
     }
 
+    /**
+     * Get all observations from the database
+     * @return a list of all observations
+     */
     @GetMapping("/observations")
     public ResponseEntity<List<PredictionDbo>> getObservations() {
         try {

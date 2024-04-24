@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Service for handling predictions.
+ */
 @Service
 public class PredictionService {
     private final Logger logger = LoggerFactory.getLogger(PredictionService.class);
@@ -25,6 +28,12 @@ public class PredictionService {
     private final PredictionRepository predictionRepository;
     private final RestTemplate restTemplate;
 
+    /**
+     * Constructor for the PredictionService.
+     * @param modelUrl The URL of the model.
+     * @param predictionRepository The prediction repository.
+     * @param restTemplate The REST template.
+     */
     @Autowired
     public PredictionService(@Value("${plant-detection.model.url}") String modelUrl, PredictionRepository predictionRepository, RestTemplate restTemplate) {
         this.modelUrl = modelUrl;
@@ -32,6 +41,13 @@ public class PredictionService {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * Method for handling prediction requests.
+     * @param image The image in base64 format.
+     * @param latitude The latitude of the location where the image was taken.
+     * @param longitude The longitude of the location where the image was taken.
+     * @return The prediction response.
+     */
     public PredictionResponseModel predict(String image, BigDecimal latitude, BigDecimal longitude) {
         String uri = modelUrl + "/predict";
         try {
@@ -46,6 +62,13 @@ public class PredictionService {
         }
     }
 
+    /**
+     * Method for saving a prediction to the database.
+     * @param image The image in base64 format.
+     * @param latitude The latitude of the location where the image was taken.
+     * @param longitude The longitude of the location where the image was taken.
+     * @param prediction The prediction.
+     */
     private void savePrediction(BigDecimal latitude, BigDecimal longitude, String image, String prediction) {
         PredictionDbo toBeSaved = new PredictionDbo(null, latitude, longitude, LocalDateTime.now(), image, prediction);
         predictionRepository.save(toBeSaved);

@@ -4,6 +4,9 @@ import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
 
+/**
+ * Custom physical naming strategy for the application.
+ */
 public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
 
     @Override
@@ -31,6 +34,12 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
         return convertToUpperCase(name); // Just convert column names to upper case
     }
 
+    /**
+     * Convert the identifier with a prefix.
+     * @param identifier The identifier to convert.
+     * @param prefix The prefix to add.
+     * @return The converted identifier.
+     */
     private Identifier convertWithPrefix(Identifier identifier, String prefix) {
         if (identifier == null) {
             return null;
@@ -40,6 +49,11 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
         return Identifier.toIdentifier(newName);
     }
 
+    /**
+     * Convert the identifier to upper case.
+     * @param identifier The identifier to convert.
+     * @return The converted identifier.
+     */
     private Identifier convertToUpperCase(Identifier identifier) {
         if (identifier == null) {
             return null;

@@ -16,6 +16,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Class for initializing data in the database in the dev environment.
+ */
 @Component
 public class DataInitializer {
     private final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
@@ -32,6 +35,9 @@ public class DataInitializer {
         this.predictionRepository = predictionRepository;
     }
 
+    /**
+     * Method for initializing data in the database in the dev environment.
+     */
     @PostConstruct
     public void initData() {
         if ("DEV".equals(environmentName)) {
@@ -49,6 +55,10 @@ public class DataInitializer {
         }
     }
 
+    /**
+     * Method for generating a random base64 image.
+     * @return The base64 image.
+     */
     private String getBase64Image() {
         try {
             return ImageGenerator.generateRandomBase64Image(15, 15);
@@ -57,10 +67,20 @@ public class DataInitializer {
         }
     }
 
+    /**
+     * Method for generating a random coordinate.
+     * @param min The minimum value.
+     * @param max The maximum value.
+     * @return The random coordinate.
+     */
     private double generateRandomCoordinate(double min, double max) {
         return min + (max - min) * random.nextDouble();
     }
 
+    /**
+     * Method for generating a random date time within the last 100 days.
+     * @return The random date time.
+     */
     private LocalDateTime randomDateTimeWithinLast100Days() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime hundredDaysAgo = now.minusDays(100);

@@ -9,7 +9,18 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class ImageGenerator {
+public final class ImageGenerator {
+    private ImageGenerator() {
+    }
+
+    /**
+     * Generates a random image of the given width and height and returns it as a Base64 string.
+     *
+     * @param width  of picture
+     * @param height of picture
+     * @return Base64 encoded image
+     * @throws IOException if the image cannot be written
+     */
     public static String generateRandomBase64Image(int width, int height) throws IOException {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Random rand = new Random();
