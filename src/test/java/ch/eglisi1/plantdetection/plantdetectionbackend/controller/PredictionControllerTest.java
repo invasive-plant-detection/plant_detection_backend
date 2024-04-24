@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.math.BigDecimal;
+
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 class PredictionControllerTest {
@@ -39,10 +41,12 @@ class PredictionControllerTest {
     void predict() throws Exception {
         String testImage = "testImageString";
         String mockInstruction = "This is a dummy instruction";
+        BigDecimal longitude = BigDecimal.ONE;
+        BigDecimal latitude = BigDecimal.ONE;
 
         PredictionResponseModel mockResponse = new PredictionResponseModel(testImage, mockInstruction);
 
-        BDDMockito.given(predictionService.predict(ArgumentMatchers.eq(testImage)))
+        BDDMockito.given(predictionService.predict(ArgumentMatchers.eq(testImage), latitude, longitude))
                 .willReturn(mockResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/predict")

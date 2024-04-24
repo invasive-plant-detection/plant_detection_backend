@@ -1,6 +1,6 @@
 package ch.eglisi1.plantdetection.plantdetectionbackend.controller;
 
-import ch.eglisi1.plantdetection.plantdetectionbackend.schema.PredictionRequestModel;
+import ch.eglisi1.plantdetection.plantdetectionbackend.schema.IncomingPredictionRequestModel;
 import ch.eglisi1.plantdetection.plantdetectionbackend.schema.PredictionResponseModel;
 import ch.eglisi1.plantdetection.plantdetectionbackend.service.PredictionService;
 import org.slf4j.Logger;
@@ -18,8 +18,8 @@ public class PredictionController {
     }
 
     @PostMapping("/predict")
-    public PredictionResponseModel predict(@RequestBody PredictionRequestModel request) {
-        logger.debug("Received base64Image: {}", request.base64Image());
-        return predictionService.predict(request.base64Image());
+    public PredictionResponseModel predict(@RequestBody IncomingPredictionRequestModel request) {
+        logger.debug("Received request: {}", request);
+        return predictionService.predict(request.base64Image(), request.latitude(), request.longitude());
     }
 }
