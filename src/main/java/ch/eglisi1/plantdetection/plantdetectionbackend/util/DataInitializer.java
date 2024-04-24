@@ -22,6 +22,8 @@ public class DataInitializer {
     private final Random random = new Random();
     private final PredictionRepository predictionRepository;
 
+    public final static int ENTITIES_TO_CREATE = 100;
+
     @Value("${environment.name}")
     private String environmentName;
 
@@ -33,10 +35,9 @@ public class DataInitializer {
     @PostConstruct
     public void initData() {
         if ("DEV".equals(environmentName)) {
-            int entitiesToCreate = 100;
             String base64Image = getBase64Image();
             String prediction = "Here will be my prediction that is better than a coin flip";
-            for (int i = 0; i < entitiesToCreate; i++) {
+            for (int i = 0; i < ENTITIES_TO_CREATE; i++) {
                 BigDecimal latitude = BigDecimal.valueOf(generateRandomCoordinate(46.8, 47.8)); // Approximate range for latitude in German-speaking Switzerland
                 BigDecimal longitude = BigDecimal.valueOf(generateRandomCoordinate(6.9, 10.5)); // Approximate range for longitude in German-speaking Switzerland
 
@@ -44,7 +45,7 @@ public class DataInitializer {
                 PredictionDbo savedDbo = predictionRepository.save(predictionDbo);
                 logger.debug("Created Entity:\n{}", savedDbo);
             }
-            logger.info("Created {} entities", entitiesToCreate);
+            logger.info("Created {} entities", ENTITIES_TO_CREATE);
         }
     }
 

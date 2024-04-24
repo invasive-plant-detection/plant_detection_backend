@@ -1,30 +1,18 @@
 package ch.eglisi1.plantdetection.plantdetectionbackend.controller;
 
+import ch.eglisi1.plantdetection.plantdetectionbackend.schema.IncomingPredictionRequestModel;
 import ch.eglisi1.plantdetection.plantdetectionbackend.schema.PredictionResponseModel;
 import ch.eglisi1.plantdetection.plantdetectionbackend.service.PredictionService;
-import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.mockito.*;
 
 import java.math.BigDecimal;
 
-@ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
-class PredictionControllerTest {
+import static org.mockito.Mockito.when;
 
-    private MockMvc mockMvc;
+class PredictionControllerTest {
 
     @Mock
     private PredictionService predictionService;
@@ -33,28 +21,35 @@ class PredictionControllerTest {
     private PredictionController predictionController;
 
     @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(predictionController).build();
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void predict() throws Exception {
-        String testImage = "testImageString";
-        String mockInstruction = "This is a dummy instruction";
-        BigDecimal longitude = BigDecimal.ONE;
-        BigDecimal latitude = BigDecimal.ONE;
+    void predict_ReturnsCorrectResponseModel() {
+        // Arrange
+        IncomingPredictionRequestModel request = new IncomingPredictionRequestModel("image_base64", BigDecimal.ONE, BigDecimal.TWO);
+        PredictionResponseModel expectedResponse = new PredictionResponseModel("Plant type detected", "Instruction");
+        Mockito.when(predictionService.predict(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(expectedResponse);
 
-        PredictionResponseModel mockResponse = new PredictionResponseModel(testImage, mockInstruction);
+        // Act
+        PredictionResponseModel actualResponse = predictionController.predict(request);
 
-        BDDMockito.given(predictionService.predict(ArgumentMatchers.eq(testImage), latitude, longitude))
-                .willReturn(mockResponse);
+        // Assert
+        Assertions.assertNotNull(actualResponse);
+        Assertions.assertEquals(expectedResponse, actualResponse);
+        Mockito.verify(predictionService).predict(request.base64Image(), request.latitude(), request.longitude());
+    }
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/predict")
-                        .content(testImage)
-                        .contentType(MediaType.TEXT_PLAIN))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(mockInstruction)))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(testImage)))
-        ;
+    @Test
+    void predict_ThrowsException_ReturnsErrorResponse() {
+        // Arrange
+        IncomingPredictionRequestModel request = new IncomingPredictionRequestModel("invalid_image", BigDecimal.ZERO, BigDecimal.TEN);
+        when(predictionService.predict(ArgumentMatchers.anyString(), ArgumentMatchers.any(), ArgumentMatchers.any())).thenThrow(new RuntimeException("Failed to process image"));
+
+        // Act & Assert
+        Exception exception = Assertions.assertThrows(RuntimeException.class, () -> predictionController.predict(request));
+        Assertions.assertEquals("Failed to process image", exception.getMessage());
+        Mockito.verify(predictionService).predict(request.base64Image(), request.latitude(), request.longitude());
     }
 }
