@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 public class ObservationController {
@@ -36,12 +33,5 @@ public class ObservationController {
             this.logger.error("Error retrieving observations: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-    }
-
-    public ResponseEntity<PredictionDbo> findPredictionById(@PathVariable UUID id) {
-        Optional<PredictionDbo> prediction = predictionRepository.findById(id);
-        return prediction
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
