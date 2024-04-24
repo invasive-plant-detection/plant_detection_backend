@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface PredictionRepository extends JpaRepository<PredictionDbo, UUID> {
-    PredictionDbo searchByPredictionId(UUID predictionId);
 }
